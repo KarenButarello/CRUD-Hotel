@@ -19,3 +19,4 @@ Este é um projeto de sistema simples de gerenciamento de hotel (CRUD - Create, 
 - ✅ Deletar hóspedes
 - ✅ Buscar hóspede por ID
 
+Desenvolvido por  Karen Butarello
