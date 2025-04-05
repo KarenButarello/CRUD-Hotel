@@ -11,27 +11,27 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Data
-@Table(name = "Reservas")
+@Table(name = "reservas")
 public class Reservas {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, name = "Checkin")
+    @Column(name = "checkin", nullable = false)
     private LocalDate checkin;
 
-    @Column(nullable = false, name = "Checkout")
+    @Column(name = "checkout", nullable = false)
     private LocalDate checkout;
 
     @ManyToOne
     @JoinColumn(name = "hospede_id", nullable = false)
-    private Hospede hospedeId;
+    private Hospede hospede;
 
     @ManyToOne
-    @JoinColumn( name = "Quarto_Id", nullable = false)
-    private Quarto quartoId;
+    @JoinColumn( name = "quarto_id", nullable = false)
+    private Quarto quarto;
 
-    @Column(name = "Situacao")
+    @Column(name = "situacao")
     private Boolean situacao;
 }

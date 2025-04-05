@@ -11,22 +11,22 @@ import java.time.LocalDate;
 @Data
 @Getter
 @Setter
-@Table(name = "Hospede")
+@Table(name = "hospede")
 public class Hospede {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "Nome")
+    @Column(name = "nome")
     private String nome;
 
-    @Column(name = "Data_Nascimento")
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
-    @Column(name = "Telefone")
+    @Column(name = "telefone")
     private String telefone;
 
-    @Column(name = "CPF")
+    @Column(name = "cpf")
     private String cpf;
 }

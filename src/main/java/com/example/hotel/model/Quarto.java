@@ -1,6 +1,6 @@
 package com.example.hotel.model;
 
-import com.example.hotel.ETipoQuarto;
+import com.example.hotel.enums.ETipoQuarto;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -12,22 +12,23 @@ import java.math.BigDecimal;
 @Data
 @Getter
 @Setter
-@Table(name = "Quarto")
+@Table(name = "quarto")
 public class Quarto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "Numero")
+    @Column(name = "numero")
     private Integer numero;
 
-    @Column(name = "Tipo_Quarto")
-    private ETipoQuarto tipo;
+    @Column(name = "tipo_quarto")
+    @Enumerated(EnumType.STRING)
+    private ETipoQuarto tipoQuarto;
 
-    @Column(name = "Valor")
+    @Column(name = "valor")
     private BigDecimal valor;
 
-    @Column(name = "Disponibilidade")
+    @Column(name = "disponibilidade")
     private Boolean disponibilidade;
 }
