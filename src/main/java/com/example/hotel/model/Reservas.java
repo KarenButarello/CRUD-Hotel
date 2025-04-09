@@ -1,5 +1,6 @@
 package com.example.hotel.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -19,9 +20,11 @@ public class Reservas {
     private Integer id;
 
     @Column(name = "checkin", nullable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkin;
 
     @Column(name = "checkout", nullable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkout;
 
     @ManyToOne

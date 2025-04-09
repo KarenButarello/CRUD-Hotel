@@ -1,5 +1,6 @@
 package com.example.hotel.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Hospede {
     private String nome;
 
     @Column(name = "data_nascimento")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     @Column(name = "telefone")
