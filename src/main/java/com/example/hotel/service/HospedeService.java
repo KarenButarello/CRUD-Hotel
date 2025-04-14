@@ -31,18 +31,18 @@ public class HospedeService {
     }
 
     public Hospede atualizarDadosHospede(Integer id, Hospede hospede) {
-        Optional<Hospede> hospedeEncontrado = repository.findById(id);
-
-        var hospedeAtual = hospedeEncontrado.get();
+        var hospedeAtual = buscarHospedePorId(id);
 
         if (!hospedeAtual.getCpf().equals(hospede.getCpf())) {
             verificarCpfExistente(hospede.getCpf());
             hospedeAtual.setCpf(hospede.getCpf());
         }
 
-        hospedeAtual.setNome(hospede.getNome());
-        hospedeAtual.setTelefone(hospede.getTelefone());
-        hospedeAtual.setDataNascimento(hospede.getDataNascimento());
+        var hospedeRequest = HospedeRequest.of(hospede);
+
+        hospedeAtual.setNome(hospedeRequest.getNome());
+        hospedeAtual.setTelefone(hospedeRequest.getTelefone());
+        hospedeAtual.setDataNascimento(hospedeRequest.getDataNascimento());
 
         return repository.save(hospedeAtual);
     }

@@ -4,6 +4,7 @@ import com.example.hotel.model.Hospede;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,6 +25,8 @@ public class HospedeRequest {
     @NotBlank(message = "O telefone é obrigatório.")
     private String telefone;
 
+    @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$",
+            message = "CPF deve estar no formato XXX.XXX.XXX-XX")
     @NotBlank(message = "O CPF é obrigatório.")
     private String cpf;
 
