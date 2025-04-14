@@ -1,6 +1,6 @@
 ## CRUD-Hotel
 
-Este é um projeto de sistema simples de gerenciamento de hotel (CRUD - Create, Read, Update, Delete), desenvolvido para fins de estudo e prática de programação.
+Este é um projeto de sistema de gerenciamento de hotel, desenvolvido para fins de estudo e prática de programação.
 
 ## Tecnologias Utilizadas
 
