@@ -22,6 +22,9 @@ public class Quarto {
     @Column(name = "numero")
     private Integer numero;
 
+    @Column(name = "qtd_hospedes")
+    private Integer qtdHospedes;
+
     @Column(name = "tipo_quarto")
     @Enumerated(EnumType.STRING)
     private ETipoQuarto tipoQuarto;
