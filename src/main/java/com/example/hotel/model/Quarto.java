@@ -34,4 +34,12 @@ public class Quarto {
 
     @Column(name = "disponibilidade")
     private Boolean disponibilidade;
+
+    public Quarto(){
+
+    }
+
+    public Quarto(Integer id) {
+        this.id = id;
+    }
 }
