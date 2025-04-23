@@ -1,6 +1,5 @@
 package com.example.hotel.dto;
 
-import com.example.hotel.model.Hospede;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

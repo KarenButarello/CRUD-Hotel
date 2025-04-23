@@ -48,14 +48,14 @@ public class ReservaService {
             reserva.setSituacao(true);
             quarto.setDisponibilidade(false);
         } catch (DisponibilidadeException e) {
-            reserva.setSituacao(false);
+            throw new DisponibilidadeException("O quarto não está disponível para reserva.");
         }
 
         return repository.save(reserva);
     }
 
     private void validarDisponibilidadeQuarto(Quarto quarto) {
-          if (quarto.getDisponibilidade() != null && !quarto.getDisponibilidade()) {
+        if (quarto.getDisponibilidade() != null && !quarto.getDisponibilidade()) {
             throw new DisponibilidadeException("O quarto não está disponível para reserva.");
         }
     }

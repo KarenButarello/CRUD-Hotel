@@ -1,7 +1,5 @@
 package com.example.hotel.dto;
 
-import com.example.hotel.model.Hospede;
-import com.example.hotel.model.Quarto;
 import com.example.hotel.model.Reservas;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
