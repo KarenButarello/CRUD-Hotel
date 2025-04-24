@@ -30,12 +30,16 @@ public class ReservaRequest {
     @NotNull(message = "Quarto deve ser preenchido")
     private Integer quartoId;
 
+    @NotNull(message = "A quantidade de hospedes deve ser preenchida")
+    private Integer qtdHospedes;
+
     public static ReservaRequest of(Reservas reserva) {
         return ReservaRequest.builder()
                 .checkin(reserva.getCheckin())
                 .checkout(reserva.getCheckout())
                 .hospedeId(reserva.getHospede().getId())
                 .quartoId(reserva.getQuarto().getId())
+                .qtdHospedes(reserva.getQtdHospedes())
                 .build();
     }
 }

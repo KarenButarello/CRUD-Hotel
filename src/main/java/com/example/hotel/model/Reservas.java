@@ -37,4 +37,7 @@ public class Reservas {
 
     @Column(name = "situacao")
     private Boolean situacao;
+
+    @Column(name = "qtd_hospedes")
+    private Integer qtdHospedes;
 }
