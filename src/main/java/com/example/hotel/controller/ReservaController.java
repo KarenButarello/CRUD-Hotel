@@ -1,7 +1,7 @@
 package com.example.hotel.controller;
 
 import com.example.hotel.dto.ReservaRequest;
-import com.example.hotel.model.Reservas;
+import com.example.hotel.dto.ReservaResponse;
 import com.example.hotel.service.ReservaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,17 +19,17 @@ public class ReservaController {
     private ReservaService service;
 
     @GetMapping
-    public List<Reservas> listarReservas() {
+    public List<ReservaResponse> listarReservas() {
         return service.listarReservas();
     }
 
     @GetMapping("/{id}")
-    public Reservas buscarReservaPorId(@PathVariable Integer id) {
+    public ReservaResponse buscarReservaPorId(@PathVariable Integer id) {
         return service.buscarReservaPorId(id);
     }
 
     @PostMapping
-    public Reservas cadastrarReserva(@RequestBody @Valid ReservaRequest request) {
+    public ReservaResponse cadastrarReserva(@RequestBody @Valid ReservaRequest request) {
         return service.cadastrarReserva(request);
     }
 }
