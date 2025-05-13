@@ -32,16 +32,24 @@ public class HospedeService {
     public Hospede atualizarDadosHospede(Integer id, Hospede hospede) {
         var hospedeAtual = buscarHospedePorId(id);
 
-        if (!hospedeAtual.getCpf().equals(hospede.getCpf())) {
+        if (hospede.getCpf() != null && !hospedeAtual.getCpf().equals(hospede.getCpf())) {
             verificarCpfExistente(hospede.getCpf());
             hospedeAtual.setCpf(hospede.getCpf());
         }
 
         var hospedeRequest = HospedeRequest.of(hospede);
 
-        hospedeAtual.setNome(hospedeRequest.getNome());
-        hospedeAtual.setTelefone(hospedeRequest.getTelefone());
-        hospedeAtual.setDataNascimento(hospedeRequest.getDataNascimento());
+        if (hospedeRequest.getNome() != null) {
+            hospedeAtual.setNome(hospedeRequest.getNome());
+        }
+
+        if (hospedeRequest.getTelefone() != null) {
+            hospedeAtual.setTelefone(hospedeRequest.getTelefone());
+        }
+
+        if (hospedeRequest.getDataNascimento() != null) {
+            hospedeAtual.setDataNascimento(hospedeRequest.getDataNascimento());
+        }
 
         return repository.save(hospedeAtual);
     }

@@ -1,5 +1,6 @@
 package com.example.hotel.service;
 
+import com.example.hotel.dto.CancelamentoResponse;
 import com.example.hotel.dto.ReservaRequest;
 import com.example.hotel.dto.ReservaResponse;
 import com.example.hotel.exception.DisponibilidadeException;
@@ -10,6 +11,7 @@ import com.example.hotel.repository.HospedeRepository;
 import com.example.hotel.repository.QuartoRepository;
 import com.example.hotel.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -71,6 +73,82 @@ public class ReservaService {
 
         Reservas reservaSalva = repository.save(reserva);
         return ReservaResponse.fromEntity(reservaSalva);
+    }
+
+    public ReservaResponse atualizarReserva(Integer id, ReservaRequest request) {
+        var reservaAtual = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Reserva não encontrada"));
+
+        if (request.getCheckin() != null) {
+            LocalDate checkinParaValidar = request.getCheckin();
+            LocalDate checkoutParaValidar = request.getCheckout() != null
+                    ? request.getCheckout()
+                    : reservaAtual.getCheckout();
+
+            validarPeriodo(checkinParaValidar, checkoutParaValidar);
+            reservaAtual.setCheckin(request.getCheckin());
+        }
+
+        if (request.getCheckout() != null) {
+            LocalDate checkoutParaValidar = request.getCheckout();
+            LocalDate checkinParaValidar = request.getCheckin() != null
+                    ? request.getCheckin()
+                    : reservaAtual.getCheckin();
+
+            validarPeriodo(checkinParaValidar, checkoutParaValidar);
+            reservaAtual.setCheckout(request.getCheckout());
+        }
+
+        if (request.getQtdHospedes() != null) {
+            Quarto quarto = request.getQuartoId() != null
+                    ? quartoRepository.findById(request.getQuartoId())
+                    .orElseThrow(() -> new NoSuchElementException("Quarto não encontrado"))
+                    : reservaAtual.getQuarto();
+
+            validarQuantidadeHospedePorQuarto(quarto, request.getQtdHospedes());
+
+            reservaAtual.setQtdHospedes(request.getQtdHospedes());
+
+            if (request.getQuartoId() != null) {
+                Quarto quartoAntigo = reservaAtual.getQuarto();
+                quartoAntigo.setDisponibilidade(true);
+                quartoRepository.save(quartoAntigo);
+
+                quarto.setDisponibilidade(false);
+                reservaAtual.setQuarto(quarto);
+                quartoRepository.save(quarto);
+            }
+        }
+
+        var reservaAtualizada = repository.save(reservaAtual);
+        return ReservaResponse.fromEntity(reservaAtualizada);
+    }
+
+    public ResponseEntity<CancelamentoResponse> cancelarReserva(Integer id) {
+        var reserva = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Reserva não encontrada"));
+
+        validarCancelamento(reserva);
+
+        if (Boolean.FALSE.equals(reserva.getSituacao())) {
+            throw new ValidacaoException("Reserva já está cancelada");
+        }
+
+        var quarto = reserva.getQuarto();
+        quarto.setDisponibilidade(true);
+        quartoRepository.save(quarto);
+
+        reserva.setSituacao(false);
+        var reservaCancelada = repository.save(reserva);
+
+        var response = new CancelamentoResponse(reservaCancelada);
+
+        return ResponseEntity.ok(response);
+    }
+
+    private void validarCancelamento(Reservas reserva) {
+        if (reserva.getCheckout().isBefore(LocalDate.now())) {
+            throw new ValidacaoException("Não é possível cancelar reservas já finalizadas");
+        }
     }
 
     private void validarDisponibilidadeQuarto(Quarto quarto) {
