@@ -7,6 +7,7 @@ import com.example.hotel.repository.HospedeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -48,6 +49,7 @@ public class HospedeService {
         }
 
         if (hospedeRequest.getDataNascimento() != null) {
+            validarDataNascimento(hospede.getDataNascimento());
             hospedeAtual.setDataNascimento(hospedeRequest.getDataNascimento());
         }
 
@@ -69,6 +71,12 @@ public class HospedeService {
     private void verificarCpfExistente(String cpf) {
         if (repository.existsByCpf(cpf)) {
             throw new ValidacaoException("CPF " + cpf + " já está cadastrado no sistema.");
+        }
+    }
+
+    private void validarDataNascimento(LocalDate dataNascimento) {
+        if (dataNascimento.isAfter(LocalDate.now())) {
+            throw new ValidacaoException("A data de nascimento não pode ser maior que a atual");
         }
     }
 }
