@@ -318,13 +318,14 @@ class HospedeControllerTest {
 
     @Test
     public void deletarHospede_deveRetornar404_quandoHospedeNaoEncontrado() throws Exception {
-        doThrow(new ValidacaoException("Hóspede não encontrado com o ID: " + 1))
+        var id = 1;
+        doThrow(new EntityNotFoundException("Hóspede não encontrado com o ID: " + id))
                 .when(service).deletarHospede(anyInt());
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/hospede/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 
-        verify(service, never()).deletarHospede(1);
+        verify(service, times(1)).deletarHospede(id);
     }
 }
