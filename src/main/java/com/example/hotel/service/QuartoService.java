@@ -1,6 +1,7 @@
 package com.example.hotel.service;
 
 import com.example.hotel.exception.DisponibilidadeException;
+import com.example.hotel.exception.NotFoundException;
 import com.example.hotel.exception.ValidacaoException;
 import com.example.hotel.model.Quarto;
 import com.example.hotel.repository.QuartoRepository;
@@ -21,7 +22,7 @@ public class QuartoService {
 
     public Quarto buscarQuartoPorId(Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ValidacaoException("Quarto não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Quarto não encontrado"));
     }
 
     public List<Quarto> obterQuartosDisponiveis() {
