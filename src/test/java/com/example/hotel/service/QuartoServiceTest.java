@@ -1,6 +1,7 @@
 package com.example.hotel.service;
 
 import com.example.hotel.exception.DisponibilidadeException;
+import com.example.hotel.exception.NotFoundException;
 import com.example.hotel.exception.ValidacaoException;
 import com.example.hotel.model.Quarto;
 import com.example.hotel.repository.QuartoRepository;
@@ -89,7 +90,7 @@ public class QuartoServiceTest {
         when(repository.findById(1)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.buscarQuartoPorId(1))
-                .isInstanceOf(ValidacaoException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessage("Quarto não encontrado");
 
         verify(repository, times(1)).findById(1);
