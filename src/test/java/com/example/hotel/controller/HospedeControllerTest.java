@@ -63,6 +63,7 @@ public class HospedeControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/hospede/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+        verify(service, times(1)).buscarHospedePorId(1);
     }
 
     @Test
@@ -73,6 +74,7 @@ public class HospedeControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/hospede/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError());
+        verify(service, times(1)).buscarHospedePorId(1);
     }
 
     @Test
