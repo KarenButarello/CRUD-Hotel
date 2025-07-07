@@ -1,9 +1,11 @@
 package com.example.hotel.controller;
 
+import com.example.hotel.exception.DisponibilidadeException;
 import com.example.hotel.model.Quarto;
 import com.example.hotel.service.QuartoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +29,12 @@ public class QuartoController {
     }
 
     @GetMapping("/disponiveis")
-    public List<Quarto> obterQuartosDisponiveis(Boolean disponibilidade) {
-        return service.obterQuartosDisponiveis();
+    public ResponseEntity<List<Quarto>> obterQuartosDisponiveis(Boolean disponibilidade) {
+        try {
+            List<Quarto> quartos = service.obterQuartosDisponiveis();
+            return ResponseEntity.ok(quartos);
+        } catch (DisponibilidadeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

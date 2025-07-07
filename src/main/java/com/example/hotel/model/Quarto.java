@@ -34,7 +34,6 @@ public class Quarto {
     private BigDecimal valor;
 
     @Column(name = "disponibilidade")
-    @JsonIgnore
     private Boolean disponibilidade;
 
     public Quarto(){
