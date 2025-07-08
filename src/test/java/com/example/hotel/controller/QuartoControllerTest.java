@@ -65,14 +65,12 @@ public class QuartoControllerTest {
     }
 
     @Test
-    public void buscarQuarto_deveRetornar200ComListaVazia_quandoNaoEncontrarQuartos() throws Exception {
-        List<Quarto> quartos = Collections.emptyList();
-
-        when(service.buscarTodos()).thenReturn(quartos);
+    public void buscarQuarto_deveRetornar404_quandoNaoEncontrarQuartos() throws Exception {
+        when(service.buscarTodos()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/quarto")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
 
         verify(service, times(1)).buscarTodos();
     }

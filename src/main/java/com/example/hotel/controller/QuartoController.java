@@ -1,6 +1,7 @@
 package com.example.hotel.controller;
 
 import com.example.hotel.exception.DisponibilidadeException;
+import com.example.hotel.exception.NotFoundException;
 import com.example.hotel.model.Quarto;
 import com.example.hotel.service.QuartoService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,11 @@ public class QuartoController {
 
     @GetMapping
     public List<Quarto> buscarQuarto() {
-        return service.buscarTodos();
+        List<Quarto> quartos = service.buscarTodos();
+        if (quartos.isEmpty()) {
+            throw new NotFoundException("Nenhum quarto encontrado");
+        }
+        return quartos;
     }
 
     @GetMapping("/{id}")
