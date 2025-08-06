@@ -19,9 +19,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -52,6 +55,8 @@ public class HospedeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.nome").value("Jose"));
+
+        verify(service, times(1)).buscarHospedePorId(1);
     }
 
     @Test
@@ -110,6 +115,21 @@ public class HospedeControllerTest {
                 .andExpect(jsonPath("$[1].telefone").value("(43)9988-7766"));
 
         verify(service, times(1)).listarTodos();
+    }
+
+    @Test
+    public void listarTodos_deveRetornar404_quandoNaoHouverListaDeHospedes() throws Exception {
+       List<Hospede> hospedes = Collections.emptyList();
+
+       when(service.listarTodos()).thenReturn(hospedes);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/hospede")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
+
+       verify(service, times(1)).listarTodos();
     }
 
     @Test
