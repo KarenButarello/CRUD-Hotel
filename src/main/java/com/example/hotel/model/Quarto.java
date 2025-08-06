@@ -1,7 +1,6 @@
 package com.example.hotel.model;
 
 import com.example.hotel.enums.ETipoQuarto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;

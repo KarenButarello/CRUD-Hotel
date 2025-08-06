@@ -2,7 +2,6 @@ package com.example.hotel.service;
 
 import com.example.hotel.exception.DisponibilidadeException;
 import com.example.hotel.exception.NotFoundException;
-import com.example.hotel.exception.ValidacaoException;
 import com.example.hotel.model.Quarto;
 import com.example.hotel.repository.QuartoRepository;
 import org.junit.jupiter.api.Test;
