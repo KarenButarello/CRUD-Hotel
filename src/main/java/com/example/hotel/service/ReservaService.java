@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -71,7 +73,13 @@ public class ReservaService {
             throw new DisponibilidadeException("O quarto não está disponível para reserva.");
         }
 
-        Reservas reservaSalva = repository.save(reserva);
+        reserva.setValorTotal(calcularValorTotalReserva(
+                reserva.getCheckin(),
+                reserva.getCheckout(),
+                reserva.getQuarto().getValor())
+        );
+
+        var reservaSalva = repository.save(reserva);
         return ReservaResponse.fromEntity(reservaSalva);
     }
 
@@ -167,5 +175,11 @@ public class ReservaService {
         if (checkin.isAfter(checkout)) {
             throw new ValidacaoException("A data de checkin não pode ser depois da data de checkout");
         }
+    }
+
+    private BigDecimal calcularValorTotalReserva(LocalDate dataInicio, LocalDate dataFim, BigDecimal valorQuarto) {
+        var quantidadeDias = ChronoUnit.DAYS.between(dataInicio, dataFim);
+
+        return valorQuarto.multiply(BigDecimal.valueOf(quantidadeDias));
     }
 }

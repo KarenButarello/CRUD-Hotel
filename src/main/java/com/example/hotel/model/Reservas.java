@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -40,4 +41,7 @@ public class Reservas {
 
     @Column(name = "qtd_hospedes")
     private Integer qtdHospedes;
+
+    @Column(name = "valor_total")
+    private BigDecimal valorTotal;
 }

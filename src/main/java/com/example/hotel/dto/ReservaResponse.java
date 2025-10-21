@@ -5,6 +5,7 @@ import com.example.hotel.model.Quarto;
 import com.example.hotel.model.Reservas;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -17,6 +18,7 @@ public class ReservaResponse {
     private Quarto quarto;
     private Boolean situacao;
     private Integer qtdHospedes;
+    private BigDecimal valorTotalReserva;
 
     public static ReservaResponse fromEntity(Reservas reserva) {
         ReservaResponse dto = new ReservaResponse();
@@ -32,10 +34,12 @@ public class ReservaResponse {
         quartoDTO.setQtdHospedes(reserva.getQuarto().getQtdHospedes());
         quartoDTO.setTipoQuarto(reserva.getQuarto().getTipoQuarto());
         quartoDTO.setValor(reserva.getQuarto().getValor());
+        quartoDTO.setDisponibilidade(reserva.getSituacao());
 
         dto.setQuarto(quartoDTO);
         dto.setSituacao(reserva.getSituacao());
         dto.setQtdHospedes(reserva.getQtdHospedes());
+        dto.setValorTotalReserva(reserva.getValorTotal());
 
         return dto;
     }
