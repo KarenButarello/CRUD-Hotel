@@ -24,7 +24,7 @@ public class HospedeController {
         return service.buscarHospedePorId(id);
     }
 
-   @GetMapping("/nome/{nome}")
+    @GetMapping("/nome/{nome}")
     public Hospede buscarHospedePorNome(@PathVariable String nome) {
         return service.buscarHospedePorNome(nome);
     }

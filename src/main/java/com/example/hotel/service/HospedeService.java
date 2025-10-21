@@ -1,7 +1,6 @@
 package com.example.hotel.service;
 
 import com.example.hotel.dto.HospedeRequest;
-import com.example.hotel.exception.NotFoundException;
 import com.example.hotel.exception.ValidacaoException;
 import com.example.hotel.model.Hospede;
 import com.example.hotel.repository.HospedeRepository;
@@ -30,7 +29,6 @@ public class HospedeService {
         return repository.findByNome(nome)
                 .orElseThrow(() -> new ValidacaoException("Hóspede não encontrado com o nome: " + nome));
     }
-
 
     public void deletarHospede(Integer id) {
         buscarHospedePorId(id);
